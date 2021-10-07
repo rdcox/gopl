@@ -1,3 +1,5 @@
+// Exercise 1.3: Experiment to measure the different in running times
+// between our potentially inefficient versions and the one that uses .Join().
 package main
 
 import (
@@ -32,6 +34,7 @@ func join1(args []string) {
 	strings.Join(args, " ")
 }
 
+// Run with: go test ./file.go -bench=.
 func BenchmarkConcat1(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		concat1(args)
@@ -49,3 +52,8 @@ func BenchmarkJoin1(b *testing.B) {
 		join1(args)
 	}
 }
+
+// Concat 1 is efficient in cases of very small numbers of arguments (1-2)
+// Concat 2 is always the least efficient option
+// Concat 3 is most efficient for >2 args
+// Time scales with additional args much more quickly with concat ops than .Join()
